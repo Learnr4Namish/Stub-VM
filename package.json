@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "canvas": "^2.10.1",
+    "readline-sync": "^1.4.10"
+  },
+  
+  "name": "stub",
+  "version": "1.0.0",
+  "description": "The Stub Virtual Machine (CLI commands based)",
+  "main": "stub.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "stub.js",
+    "start": "node stub.js"
+  },
+  "bin": {
+    "stub": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Learnr4Namish/Stub-VM"
+  },
+  "keywords": [
+    "Virtual_Machine",
+    "Namish_Kumar"
+  ],
+  "author": "Namish Kumar",
+  "license": "MIT"
+}
