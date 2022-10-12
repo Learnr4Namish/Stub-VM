@@ -4,7 +4,7 @@ const fs = require('fs')
 const { loadImage, createCanvas } = require('canvas')
 console.log("Welcome to Stub! Starting the Stub System!");
 const version = "1.0.0";
-let allCommands = ["exit", "time", "hello", "system", "reset", "version", "start", "update", "date", "clear", "cls", "app-store", "shutdown"];
+let allCommands = ["exit", "time", "hello", "system", "reset", "version", "start", "update", "date", "clear", "cls", "app-store", "shutdown", "install", "app-launcher", "mkdir"];
 askCommand();
 async function askCommand() {
     const rawCommand = readline.question("user@stub $ ");
@@ -44,6 +44,16 @@ async function processCommand(rawCommand) {
   }
   if(arguments[0] === "clear" || arguments[0] === "cls") {
      console.clear();
+  }
+  if(arguments[0] === "install") {
+      console.clear();
+      console.log("Starting Stub Installer. Please wait...");
+  }
+
+  
+
+  if(arguments[0] === "mkdir") {
+     console.log(arguments[1]);
   }
     await askCommand();
 }
