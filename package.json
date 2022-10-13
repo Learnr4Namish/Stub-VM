@@ -1,14 +1,13 @@
 {
   "dependencies": {
+    "axios": "^1.1.2",
     "canvas": "^2.10.1",
     "readline-sync": "^1.4.10"
   },
-  
   "name": "stub",
   "version": "1.0.0",
   "description": "The Stub Virtual Machine (CLI commands based)",
   "main": "stub.js",
-  "devDependencies": {},
   "scripts": {
     "test": "stub.js",
     "start": "node stub.js"
