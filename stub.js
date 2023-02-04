@@ -1,12 +1,39 @@
 #!/usr/bin/env node
 // Made by Namish Kumar in January 2023
 // The Basic codes for StubVM and StubOS 1.0.0.
+// Developed at Balasore, Odisha, India
+const { networkInterfaces } = require('os');
 const System = require("./System");
 let readline = require("readline-sync");
-let readline2 = require("readline");
+const express = require("express");
+const app = express();
+app.listen(6400, "localhost", () => {
+  console.log("Successfully started the network services!");
+})
 const meClass = "8";
 const Stub = "Stub";
 const fs = require('fs');
+const cors = require("cors");
+const bodyParser = require("body-parser");
+app.use(cors({
+  origin:"*"
+}));
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+app.get("/username", (req, res) => {
+  const ip = req.ip;
+  let userName;
+  const allFilesContent123 = fs.readFileSync("system/VARIABLES/" + "username.stubvm.var", (err) => {
+    if(err) console.log("StubVM: Unable to start the VM! Make sure that the environment is properly set-up and try again!");
+});
+String(allFilesContent123).split(/\r?\n/).forEach(text =>  {
+    userName = text;
+});
+res.end(userName);  
+});
+
+// Direct Communication Between any two StubVM running on the network
+// NOTE! Do not run More than One StubVM on the same PC! Doing so may lead to network conflicts leading to the crash of VM!
 const { Console } = require("console"); 
 console.log("Welcome to Stub! Starting the Stub System!");
 console.clear();
@@ -34,7 +61,9 @@ let allCommands = [
    "ls", 
    "wash", 
    "stub", 
-   "notepote", 
+   "notepote",
+   "send-sms", /* Send SMS using Express (3 February 2023)*/
+   "get-number",
    "day-name", 
 "pow",
 "sqrt",
@@ -46,6 +75,7 @@ let allCommands = [
 "stub-site",
 "filedexter",
 "set-name",
+"srsa", /* Stub Remote Shell Access (2 February 2023) */
 "pi"];
 let keywords = [
     "printf",
@@ -1642,6 +1672,26 @@ if(arguments[0] === "filedexter") {
  }
  if(arguments[0] === "pi") {
     console.log(Math.PI)
+ }
+
+ if(arguments[0] === "get-number") {
+  const nets = networkInterfaces();
+  const results = Object.create(null); // Or just '{}', an empty object
+  
+  for (const name of Object.keys(nets)) {
+      for (const net of nets[name]) {
+          // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+          // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+          const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
+          if (net.family === familyV4Value && !net.internal) {
+              if (!results[name]) {
+                  results[name] = [];
+              }
+              results[name].push(net.address);
+          }
+      }
+  }
+  console.log("Your address for Stub-VM is " + results["Ethernet"][0] + ":7391");
  }
 
     await askCommand();
